@@ -1,31 +1,49 @@
-# Laravel Package Boilerplate
+# Laravel Assert Encrypted
 
-[![Current Release](https://img.shields.io/github/release/ohseesoftware/laravel-package-boilerplate.svg?style=flat-square)](https://github.com/ohseesoftware/laravel-package-boilerplate/releases)
-![Build Status Badge](https://github.com/ohseesoftware/laravel-package-boilerplate/workflows/Build/badge.svg)
-[![Coverage Status](https://coveralls.io/repos/github/ohseesoftware/laravel-package-boilerplate/badge.svg?branch=master)](https://coveralls.io/github/ohseesoftware/laravel-package-boilerplate?branch=master)
-[![Maintainability Score](https://img.shields.io/codeclimate/maintainability/ohseesoftware/laravel-package-boilerplate.svg?style=flat-square)](https://codeclimate.com/github/ohseesoftware/laravel-package-boilerplate)
-[![Downloads](https://img.shields.io/packagist/dt/ohseesoftware/laravel-package-boilerplate.svg?style=flat-square)](https://packagist.org/packages/ohseesoftware/laravel-package-boilerplate)
-[![MIT License](https://img.shields.io/github/license/ohseesoftware/laravel-package-boilerplate.svg?style=flat-square)](https://github.com/ohseesoftware/laravel-package-boilerplate/blob/master/LICENSE)
+[![Current Release](https://img.shields.io/github/release/ohseesoftware/laravel-assert-encrypted.svg?style=flat-square)](https://github.com/ohseesoftware/laravel-assert-encrypted/releases)
+![Build Status Badge](https://github.com/ohseesoftware/laravel-assert-encrypted/workflows/Build/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/ohseesoftware/laravel-assert-encrypted/badge.svg?branch=master)](https://coveralls.io/github/ohseesoftware/laravel-assert-encrypted?branch=master)
+[![Maintainability Score](https://img.shields.io/codeclimate/maintainability/ohseesoftware/laravel-assert-encrypted.svg?style=flat-square)](https://codeclimate.com/github/ohseesoftware/laravel-assert-encrypted)
+[![Downloads](https://img.shields.io/packagist/dt/ohseesoftware/laravel-assert-encrypted.svg?style=flat-square)](https://packagist.org/packages/ohseesoftware/laravel-assert-encrypted)
+[![MIT License](https://img.shields.io/github/license/ohseesoftware/laravel-assert-encrypted.svg?style=flat-square)](https://github.com/ohseesoftware/laravel-assert-encrypted/blob/master/LICENSE)
 
-## TODO:
+Add an assertion to test for encrypted values in your database.
 
--   Search and replace "laravel-package-boilerplate" with the name of the new package
--   Search and replace "OhSeeSoftware\LaravelPackageBoilerplate" with the namespace of the new package
--   Change the names of the example classes (ExampleServiceProvider, ExampleFacade, etc)
+Say you have an encrypted value in your database:
 
-### Coverage reporting
+```php
+User::create([
+    'name' => 'John Doe',
+    'secret' => encrypt('api-key')
+]);
+```
 
--   If you want to report on code coverage, setup the repo at [https://coveralls.io](https://coveralls.io)
--   Update the Coveralls image URL in this README file
+It's a bit hard to test the value of `secret` in the database because there's randomness in `encrypt()`. This means `encrypt('value') !== encrypt('value')`.
 
-### Maintainability score
+To get around this, you can use the trait exposed in this package in your tests:
 
--   If you want to report on code maintainability, setup the repo at [https://codeclimate.com](https://codeclimate.com)
--   Update the Code Climate image URL in this README file
+```php
+import OhSeeSoftware\LaravelAssertEncrypted\Traits\EncryptedAssertion;
 
-### Write documentation
+class SomeTest extends TestCase
+{
+    use AssertEncrypted;
 
--   Remove this TODO section and replace with documentation for your package!
+    /** @test */
+    public function it_stores_users_secrets()
+    {
+        // Given
+        $user = factory(User::class)->create([
+            'secret' => encrypt('api-key')
+        ]);
+
+        // Then
+        $this->assertEncrypted('users', ['id' => $user->id], [
+            'secret' => 'api-key'
+        ]);
+    }
+}
+```
 
 ## Changelog
 

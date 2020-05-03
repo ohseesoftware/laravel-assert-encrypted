@@ -1,8 +1,10 @@
 <?php
 
-namespace OhSeeSoftware\LaravelPackageBoilerplate\Tests;
+namespace OhSeeSoftware\LaravelAssertEncrypted\Tests;
 
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as TestbenchTestCase;
 
 class TestCase extends TestbenchTestCase
@@ -13,19 +15,16 @@ class TestCase extends TestbenchTestCase
     {
         parent::setUp();
 
-        // $this->setupDatabase();
-        // $this->withFactories(__DIR__ . '/factories');
+        $this->setupDatabase();
     }
 
     protected function setupDatabase()
     {
-        // Create a schema here if you need one for testing
-    }
-
-
-    protected function getPackageProviders($app)
-    {
-        return [\OhSeeSoftware\LaravelPackageBoilerplate\Tests\TestServiceProvider::class];
+        Schema::create('users', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('secret');
+        });
     }
 
     /**
@@ -36,6 +35,8 @@ class TestCase extends TestbenchTestCase
      */
     protected function getEnvironmentSetUp($app)
     {
+        $app['config']->set('app.key', md5(rand()));
+
         // Setup default database to use sqlite :memory:
         $app['config']->set('database.default', 'testbench');
         $app['config']->set('database.connections.testbench', [

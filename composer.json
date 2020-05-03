@@ -1,11 +1,11 @@
 {
-    "name": "ohseesoftware/laravel-package-boilerplate",
+    "name": "ohseesoftware/laravel-assert-encrypted",
     "description": "Describe your package here.",
     "keywords": [
         "ohseesoftware",
         "laravel"
     ],
-    "homepage": "https://github.com/ohseesoftware/laravel-package-boilerplate",
+    "homepage": "https://github.com/ohseesoftware/laravel-assert-encrypted",
     "license": "MIT",
     "type": "library",
     "authors": [
@@ -15,22 +15,22 @@
         }
     ],
     "require": {
-        "php": "^7.3"
+        "php": "^7.3",
+        "phpunit/phpunit": "^8.5"
     },
     "require-dev": {
         "orchestra/testbench": "^5.0",
         "php-coveralls/php-coveralls": "^2.2",
-        "phpunit/phpunit": "^8.5",
         "squizlabs/php_codesniffer": "*"
     },
     "autoload": {
         "psr-4": {
-            "OhSeeSoftware\\LaravelServerAnalytics\\": "src"
+            "OhSeeSoftware\\LaravelAssertEncrypted\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "OhSeeSoftware\\LaravelServerAnalytics\\Tests\\": "tests"
+            "OhSeeSoftware\\LaravelAssertEncrypted\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -39,15 +39,5 @@
     },
     "config": {
         "sort-packages": true
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "OhSeeSoftware\\LaravelServerAnalytics\\LaravelServerAnalyticsServiceProvider"
-            ],
-            "aliases": {
-                "LaravelServerAnalytics": "OhSeeSoftware\\LaravelServerAnalytics\\ServerAnalytics"
-            }
-        }
     }
 }
