@@ -5,7 +5,9 @@ jobs:
         name: Test
         runs-on: ubuntu-18.04
         steps:
-            - uses: actions/checkout@v1
+            - uses: actions/checkout@v2
+            - name: Checkout
+              run: git checkout "${GITHUB_REF:11}"
             - name: Composer Install
               run: composer install
             - name: PHPCS
