@@ -12,6 +12,22 @@ jobs:
               run: ./vendor/bin/phpcs src tests
             - name: Run Tests
               run: ./vendor/bin/phpunit
+    coveralls:
+        name: Coveralls
+        if: github.ref == 'refs/heads/master'
+        needs: test
+        runs-on: ubuntu-18.04
+        steps:
+            - uses: actions/checkout@master
+            - name: Checkout
+              run: git checkout "${GITHUB_REF:11}"
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v1
+              with:
+                  php-version: "7.3"
+                  coverage: xdebug
+            - name: Run Tests
+              run: ./vendor/bin/phpunit
             - name: Coveralls
               if: github.ref == 'refs/heads/master'
               run: ./vendor/bin/php-coveralls -v --coverage_clover build/coverage.xml --json_path build/coveralls-upload.json
