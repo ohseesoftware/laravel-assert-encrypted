@@ -5,33 +5,17 @@ jobs:
         name: Test
         runs-on: ubuntu-18.04
         steps:
-            - uses: actions/checkout@v1
+            - uses: actions/checkout@master
+            - name: Checkout
+              if: github.ref == 'refs/heads/master'
+              run: git checkout "${GITHUB_REF:11}"
             - name: Composer Install
               run: composer install
             - name: PHPCS
               run: ./vendor/bin/phpcs src tests
             - name: Run Tests
               run: ./vendor/bin/phpunit
-    coveralls:
-        name: Coveralls
-        if: github.ref == 'refs/heads/master'
-        needs: test
-        runs-on: ubuntu-18.04
-        steps:
-            - uses: actions/checkout@master
-            - name: Checkout
-              run: git checkout "${GITHUB_REF:11}"
-            - name: Setup PHP
-              uses: shivammathur/setup-php@v1
-              with:
-                  php-version: "7.3"
-                  coverage: xdebug
-            - name: Composer Install
-              run: composer install
-            - name: Run Tests
-              run: ./vendor/bin/phpunit
             - name: Coveralls
-              if: github.ref == 'refs/heads/master'
               run: ./vendor/bin/php-coveralls -v --coverage_clover build/coverage.xml --json_path build/coveralls-upload.json
               env:
                   COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
