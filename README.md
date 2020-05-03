@@ -9,6 +9,14 @@
 
 Add an assertion to test for encrypted values in your database.
 
+## Install
+
+```
+composer require ohseesoftware/laravel-assert-encrypted
+```
+
+## Usage
+
 Say you have an encrypted value in your database:
 
 ```php
