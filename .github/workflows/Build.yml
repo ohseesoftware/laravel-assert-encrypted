@@ -14,7 +14,7 @@ jobs:
               run: ./vendor/bin/phpunit
     coveralls:
         name: Coveralls
-        if: github.ref === 'refs/heads/master'
+        if: github.ref == 'refs/heads/master'
         needs: test
         runs-on: ubuntu-18.04
         steps:
