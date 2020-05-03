@@ -31,7 +31,11 @@ It's a bit hard to test the value of `secret` in the database because there's ra
 To get around this, you can use the trait exposed in this package in your tests:
 
 ```php
-import OhSeeSoftware\LaravelAssertEncrypted\Traits\EncryptedAssertion;
+<?php
+
+namespace Tests;
+
+use OhSeeSoftware\LaravelAssertEncrypted\Traits\EncryptedAssertion;
 
 class SomeTest extends TestCase
 {
