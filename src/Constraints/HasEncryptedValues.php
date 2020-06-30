@@ -71,6 +71,7 @@ class HasEncryptedValues extends Constraint
         return sprintf(
             "a row in the table [%s] matches the encrypted attributes %s",
             $table,
+            json_encode($this->encryptedData),
             $this->toString(JSON_PRETTY_PRINT)
         );
     }
