@@ -1,6 +1,6 @@
 {
     "name": "ohseesoftware/laravel-assert-encrypted",
-    "description": "Describe your package here.",
+    "description": "Add an assertion to test for encrypted values in your database.",
     "keywords": [
         "ohseesoftware",
         "laravel"
