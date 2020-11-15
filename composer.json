@@ -1,6 +1,6 @@
 {
     "name": "ohseesoftware/laravel-assert-encrypted",
-    "description": "Describe your package here.",
+    "description": "Add an assertion to test for encrypted values in your database.",
     "keywords": [
         "ohseesoftware",
         "laravel"
@@ -15,10 +15,10 @@
         }
     ],
     "require": {
-        "php": "^7.3",
-        "phpunit/phpunit": "^8.5"
+        "php": "^7.3"
     },
     "require-dev": {
+        "phpunit/phpunit": "^8.5",
         "orchestra/testbench": "^5.0",
         "php-coveralls/php-coveralls": "^2.2",
         "squizlabs/php_codesniffer": "*"
