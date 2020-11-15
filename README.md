@@ -35,7 +35,7 @@ To get around this, you can use the trait exposed in this package in your tests:
 
 namespace Tests;
 
-use OhSeeSoftware\LaravelAssertEncrypted\Traits\EncryptedAssertion;
+use OhSeeSoftware\LaravelAssertEncrypted\Traits\AssertEncrypted;
 
 class SomeTest extends TestCase
 {
