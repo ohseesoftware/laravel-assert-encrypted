@@ -53,7 +53,30 @@ class SomeTest extends TestCase
         $this->assertEncrypted('users', ['id' => $user->id], [
             'secret' => 'api-key'
         ]);
+
+        // assertEncrypted is an alias for assertEncryptedSerialized
+        // since encrypt by default serializes the passed value
     }
+}
+```
+
+If your values are not serialized before encryption you can use the `assertEncryptedUnserialized` assertion.
+
+```php
+<?php
+
+ /** @test */
+public function it_stores_users_secrets()
+{
+    // Given
+    $user = factory(User::class)->create([
+        'secret' => encrypt('api-key', false)
+    ]);
+
+    // Then
+    $this->assertEncryptedUnserialized('users', ['id' => $user->id], [
+        'secret' => 'api-key'
+    ]);
 }
 ```
 

@@ -22,18 +22,25 @@ class HasEncryptedValues extends Constraint
     protected $data;
 
     /**
+     * @var bool
+     */
+    protected $serialize;
+
+    /**
      * Create a new constraint instance.
      *
      * @param  \Illuminate\Database\Connection  $database
      * @param  array  $whereData
      * @param  array  $encryptedData
+     * @param  bool   $serialize
      * @return void
      */
-    public function __construct(Connection $database, array $whereData, array $encryptedData)
+    public function __construct(Connection $database, array $whereData, array $encryptedData, bool $serialize)
     {
         $this->whereData = $whereData;
         $this->encryptedData = $encryptedData;
         $this->database = $database;
+        $this->serialize = $serialize;
     }
 
     /**
@@ -54,7 +61,7 @@ class HasEncryptedValues extends Constraint
                 return collect($columns)
                     ->every(function ($column) use ($result) {
                         $expected = $this->encryptedData[$column] ?? null;
-                        $actual = decrypt($result->$column);
+                        $actual = decrypt($result->$column, $this->serialize);
                         return $expected == $actual;
                     });
             });
@@ -69,8 +76,9 @@ class HasEncryptedValues extends Constraint
     public function failureDescription($table): string
     {
         return sprintf(
-            "a row in the table [%s] matches the encrypted attributes %s",
+            "a row in the table [%s] matches the %s encrypted attributes %s",
             $table,
+            $this->serialize ? 'serialized' : 'unserialized',
             json_encode($this->encryptedData),
             $this->toString(JSON_PRETTY_PRINT)
         );
