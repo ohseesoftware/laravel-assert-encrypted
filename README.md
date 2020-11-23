@@ -60,7 +60,7 @@ class SomeTest extends TestCase
 }
 ```
 
-If your values are not serialized before encryption you can use the `assertEncryptedUnserialized` assertion.
+If your values are not serialized before encryption, you can use the `assertEncryptedUnserialized` assertion.
 
 ```php
 <?php
