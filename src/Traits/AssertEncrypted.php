@@ -29,8 +29,12 @@ trait AssertEncrypted
      * @param null $connection
      * @return $this
      */
-    protected function assertEncryptedSerialized(string $table, array $whereData, array $encryptedData, $connection = null)
-    {
+    protected function assertEncryptedSerialized(
+        string $table,
+        array $whereData,
+        array $encryptedData,
+        $connection = null
+    ) {
         $this->assertThat(
             $table,
             new HasEncryptedValues($this->getConnection($connection), $whereData, $encryptedData, true)
@@ -48,8 +52,12 @@ trait AssertEncrypted
      * @param null $connection
      * @return $this
      */
-    protected function assertEncryptedUnserialized(string $table, array $whereData, array $encryptedData, $connection = null)
-    {
+    protected function assertEncryptedUnserialized(
+        string $table,
+        array $whereData,
+        array $encryptedData,
+        $connection = null
+    ) {
         $this->assertThat(
             $table,
             new HasEncryptedValues($this->getConnection($connection), $whereData, $encryptedData, false)
